@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pacte du Continuum</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: #0b0e14 url('1458712.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 14, 23, 0.5);
+      z-index: 1;
+    }
+
+    /* --- BRANDING HAUT À GAUCHE --- */
+    .brand-top-left {
+      position: fixed;
+      top: 25px;
+      left: 30px;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.95));
+      text-shadow: 3px 3px 6px #000, 0 0 12px rgba(0,0,0,0.9);
+    }
+
+    .brand-top-left .sub-title {
+      font-size: 2.3rem;
+      color: #dfba86;
+      font-weight: normal;
+      letter-spacing: 1px;
+    }
+
+    .brand-top-left .main-title {
+      font-size: 3rem;
+      color: #4a90e2;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-top: -6px;
+    }
+
+    /* --- LOGO SUFOKIA TÉLÉPORTABLE (AVEC HALO) --- */
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 30px rgba(0, 119, 212, 0.4); }
+      50% { box-shadow: 0 0 25px rgba(100, 200, 255, 1), 0 0 50px rgba(0, 150, 255, 0.7); }
+      100% { box-shadow: 0 0 15px rgba(0, 150, 255, 0.8), 0 0 30px rgba(0, 119, 212, 0.4); }
+    }
+
+    .random-sufokia-logo {
+      position: fixed;
+      z-index: 7;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: contain;
+      cursor: pointer;
+      animation: pulseGlow 2s infinite ease-in-out;
+      transition: top 0.2s ease, left 0.2s ease, transform 0.15s ease;
+      background: rgba(10, 14, 23, 0.3);
+    }
+
+    .random-sufokia-logo:hover {
+      transform: scale(1.15) rotate(15deg);
+    }
+
+    .random-sufokia-logo:active {
+      transform: scale(0.85);
+    }
+
+    /* --- MASCOTTE TOFU (HAUT À DROITE) --- */
+    .top-right-mascot {
+      position: fixed;
+      top: 3vh;
+      right: 3vw;
+      z-index: 6;
+      width: 350px;
+      height: auto;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.8));
+      pointer-events: none;
+    }
+
+    /* Formulaire principal (Charte d'engagement) */
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 90%;
+      max-width: 550px;
+      background: rgba(22, 26, 36, 0.93);
+      border: 3px solid #f3d152;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.95);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #f3d152;
+      font-size: 1.6rem;
+      margin-top: 0;
+      text-shadow: 2px 2px 4px #000;
+      border-bottom: 2px solid #4a3425;
+      padding-bottom: 10px;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #d1c4b2;
+      margin-bottom: 20px;
+    }
+
+    .checklist-box {
+      background: rgba(10, 12, 18, 0.75);
+      border: 1px solid #5c4533;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      margin: 12px 0;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .checkbox-item input {
+      width: 20px;
+      height: 20px;
+      accent-color: #f3d152;
+      margin-right: 12px;
+      cursor: pointer;
+    }
+
+    .btn-ready {
+      display: none;
+      background: linear-gradient(180deg, #88c227 0%, #4a7510 100%);
+      border: 2px solid #aef037;
+      color: #fff;
+      font-size: 1.4rem;
+      font-weight: bold;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-shadow: 1px 1px 3px #000;
+      box-shadow: 0 0 15px rgba(136, 194, 39, 0.6);
+      margin: 10px auto;
+    }
+
+    /* --- PANNEAU DIRECTIONNEL (AGRANDI ET FIXÉ EN BAS À DROITE) --- */
+    .real-signpost-wrapper {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      filter: drop-shadow(6px 12px 18px rgba(0, 0, 0, 0.9));
+    }
+
+    .rope-hanger {
+      width: 175px;
+      height: 40px;
+      border-top: 5px solid #8c6848;
+      border-left: 4px solid #8c6848;
+      border-right: 4px solid #8c6848;
+      border-radius: 50% 50% 0 0;
+      margin-bottom: -15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .wooden-pole {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      padding: 18px 12px;
+    }
+
+    .wooden-pole::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      bottom: -15px;
+      width: 35px;
+      background: repeating-linear-gradient(
+        90deg,
+        #2b180d,
+        #422817 7px,
+        #5a3922 14px,
+        #311c0e 21px
+      );
+      border: 3px solid #190d06;
+      border-radius: 4px;
+      box-shadow: inset -4px 0 6px rgba(0,0,0,0.6), inset 4px 0 6px rgba(255,255,255,0.05);
+      z-index: 1;
+    }
+
+    .sign-board {
+      position: relative;
+      z-index: 2;
+      width: 360px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.15s ease-in-out;
+      border: 2px solid #24140a;
+      box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.75);
+      transform-origin: center center;
+    }
+
+    .sign-board::before,
+    .sign-board::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #b5b5b5 20%, #444 80%);
+      border-radius: 50%;
+      box-shadow: 1px 1px 2px #000;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 4;
+    }
+
+    .sign-board.left::before { left: 12px; }
+    .sign-board.left::after  { right: 15px; }
+
+    .sign-board.right::before { left: 15px; }
+    .sign-board.right::after  { right: 12px; }
+
+    .sign-board.left {
+      background: linear-gradient(180deg, #5c4028 0%, #3d2919 100%);
+      color: #fce8c8;
+      text-shadow: 1px 1px 3px #000;
+      clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 30px 100%, 0% 50%);
+      padding-left: 35px;
+      padding-right: 15px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .sign-board.right {
+      background: linear-gradient(180deg, #2b2119 0%, #17110c 100%);
+      color: #e3d3bd;
+      text-shadow: 1px 1px 3px #000;
+      clip-path: polygon(0% 0%, calc(100% - 30px) 0%, 100% 50%, calc(100% - 30px) 100%, 0% 100%);
+      padding-right: 35px;
+      padding-left: 15px;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .sign-board:hover {
+      filter: brightness(1.25);
+      color: #f3d152;
+    }
+
+    .sign-board.pivot-left {
+      transform: rotate(-8deg) scale(0.97);
+    }
+    
+    .sign-board.pivot-right {
+      transform: rotate(8deg) scale(0.97);
+    }
+
+    /* Modal Secret */
+    .secret-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .secret-modal img {
+      max-width: 85%;
+      max-height: 75vh;
+      border: 3px solid #f3d152;
+      border-radius: 8px;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: #c0392b;
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BRANDING HAUT À GAUCHE -->
+  <div class="brand-top-left">
+    <span class="sub-title">Un événement</span>
+    <span class="main-title">La Compagnie de Sufokia</span>
+  </div>
+
+  <!-- LOGO SUFOKIA FLOTTANT / TÉLÉPORTABLE -->
+  <img id="floatingLogo" class="random-sufokia-logo" src="1550524140203810827.webp" alt="Logo Sufokia" onclick="moveLogoRandomly()">
+
+  <!-- GIF Tofu (Haut à droite) -->
+  <img class="top-right-mascot" src="tumblr_b3e1dff0b7bf967a0f9b4ed88bb8e792_ec2e5064_400.webp" alt="Tofu Animé">
+
+  <!-- Formulaire principal (Charte d'engagement) -->
+  <div id="mainContainer" class="container">
+    <h1>CHARTE D'ENGAGEMENT DES AVENTURIERS</h1>
+    
+    <p class="intro-text">
+      Avant d'accéder aux archives de la Faille Temporelle et de démarrer l'expérience, 
+      chaque participant doit valider les conditions ci-dessous.
+    </p>
+
+    <div class="checklist-box">
+      <label class="checkbox-item">
+        <input type="checkbox" id="check1" onchange="checkStatus()">
+        <span>Je suis prêt.</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="check2" onchange="checkStatus()">
+        <span>Je m'oppose à tout dédommagement en cas de coups et blessures.</span>
+      </label>
+    </div>
+
+    <button id="btnReady" class="btn-ready" onclick="alert('Engagement enregistré !')">
+      JE SUIS PRÊT !
+    </button>
+  </div>
+
+  <!-- PANNEAU DIRECTIONNEL (Bas à droite) -->
+  <div id="signpostWrapper" class="real-signpost-wrapper">
+    <div class="rope-hanger"></div>
+    <div class="wooden-pole">
+      <div class="sign-board left" onclick="clickSign('litneg', this)">🌸 Bois Printanier de Litneg</div>
+      <div class="sign-board right" onclick="clickSign('astrub', this)">🏖️ Plage Estivale des Calanques d'Astrub</div>
+      <div class="sign-board left" onclick="clickSign('abraknydes', this)">🍂 Forêt Automnale des Abraknydes</div>
+      <div class="sign-board right" onclick="clickSign('frigost', this)">❄️ Champs de Glace Hivernal de Frigost</div>
+    </div>
+  </div>
+
+  <!-- Modal Secret (Mis à jour en .jpg) -->
+  <div id="secretModal" class="secret-modal">
+    <h2 style="color: #f3d152;">VOIE SECRÈTE DÉVERROUILLÉE</h2>
+    <img id="secretImg" src="image_secrete.jpg" alt="Indice Secret">
+    <button class="close-btn" onclick="closeSecret()">Fermer</button>
+  </div>
+
+  <script>
+    // --- GESTION DE LA POSITION ALÉATOIRE SANS CHEVAUCHEMENT ---
+    function moveLogoRandomly() {
+      const logo = document.getElementById('floatingLogo');
+      const container = document.getElementById('mainContainer');
+      const signpost = document.getElementById('signpostWrapper');
+      
+      const containerRect = container.getBoundingClientRect();
+      const signpostRect = signpost.getBoundingClientRect();
+      
+      const logoSize = 100;
+      const margin = 25;
+      
+      let randomTop, randomLeft;
+      let overlaps = true;
+      let attempts = 0;
+
+      while (overlaps && attempts < 100) {
+        attempts++;
+        randomTop = Math.floor(Math.random() * (window.innerHeight - logoSize));
+        randomLeft = Math.floor(Math.random() * (window.innerWidth - logoSize));
+
+        const logoRight = randomLeft + logoSize;
+        const logoBottom = randomTop + logoSize;
+
+        const overlapsContainerX = logoRight > (containerRect.left - margin) && randomLeft < (containerRect.right + margin);
+        const overlapsContainerY = logoBottom > (containerRect.top - margin) && randomTop < (containerRect.bottom + margin);
+        const overlapsContainer = overlapsContainerX && overlapsContainerY;
+
+        const overlapsSignpostX = logoRight > (signpostRect.left - margin) && randomLeft < (signpostRect.right + margin);
+        const overlapsSignpostY = logoBottom > (signpostRect.top - margin) && randomTop < (signpostRect.bottom + margin);
+        const overlapsSignpost = overlapsSignpostX && overlapsSignpostY;
+
+        if (!overlapsContainer && !overlapsSignpost) {
+          overlaps = false;
+        }
+      }
+
+      logo.style.top = randomTop + 'px';
+      logo.style.left = randomLeft + 'px';
+    }
+
+    window.addEventListener('DOMContentLoaded', moveLogoRandomly);
+
+    function checkStatus() {
+      const c1 = document.getElementById('check1').checked;
+      const c2 = document.getElementById('check2').checked;
+      const btn = document.getElementById('btnReady');
+      btn.style.display = (c1 && c2) ? 'block' : 'none';
+    }
+
+    // --- BRUITAGE DE GRINCEMENT DE BOIS ---
+    function playDeepWoodCreak() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const now = ctx.currentTime;
+
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sawtooth';
+        osc1.frequency.setValueAtTime(65, now);
+        osc1.frequency.exponentialRampToValueAtTime(110, now + 0.15);
+        osc1.frequency.exponentialRampToValueAtTime(45, now + 0.4);
+
+        gain1.gain.setValueAtTime(0.01, now);
+        gain1.gain.linearRampToValueAtTime(0.25, now + 0.05);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(40, now);
+        osc2.frequency.linearRampToValueAtTime(85, now + 0.2);
+        osc2.frequency.linearRampToValueAtTime(30, now + 0.45);
+
+        gain2.gain.setValueAtTime(0.01, now);
+        gain2.gain.linearRampToValueAtTime(0.35, now + 0.08);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(280, now);
+        filter.Q.setValueAtTime(4, now);
+
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain1);
+        filter.connect(gain2);
+
+        gain1.connect(ctx.destination);
+        gain2.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.4);
+        osc2.stop(now + 0.45);
+      } catch (e) {}
+    }
+
+    // --- BRUITAGE D'ERREUR ---
+    function playErrorSound() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.linearRampToValueAtTime(60, now + 0.35);
+
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.35);
+      } catch (e) {}
+    }
+
+    // --- BRUITAGE DE SUCCÈS GLOBAL FINAL ---
+    function playSuccessMelody() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const now = ctx.currentTime;
+
+        const notes = [523.25, 659.25, 783.99, 1046.50]; 
+        notes.forEach((freq, index) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + (index * 0.08));
+
+          gain.gain.setValueAtTime(0.15, now + (index * 0.08));
+          gain.gain.exponentialRampToValueAtTime(0.001, now + (index * 0.08) + 0.25);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now + (index * 0.08));
+          osc.stop(now + (index * 0.08) + 0.25);
+        });
+      } catch (e) {}
+    }
+
+    // --- SÉQUENCE STRICTE ET QUOTAS CORRIGÉS ---
+    // 1. Litneg : 9 clics
+    // 2. Astrub : 6 clics
+    // 3. Abraknydes : 5 clics
+    // 4. Frigost : 7 clics
+    const steps = [
+      { name: 'litneg', required: 9 },
+      { name: 'astrub', required: 6 },
+      { name: 'abraknydes', required: 5 },
+      { name: 'frigost', required: 7 }
+    ];
+
+    let currentStepIndex = 0;
+    let currentClickCount = 0;
+
+    function clickSign(direction, element) {
+      playDeepWoodCreak();
+
+      const isLeft = element.classList.contains('left');
+      const animClass = isLeft ? 'pivot-left' : 'pivot-right';
+      
+      element.classList.add(animClass);
+      setTimeout(() => {
+        element.classList.remove(animClass);
+      }, 400);
+
+      const targetStep = steps[currentStepIndex];
+
+      if (direction === targetStep.name) {
+        currentClickCount++;
+
+        if (currentClickCount > targetStep.required) {
+          playErrorSound();
+          currentStepIndex = 0;
+          currentClickCount = (direction === steps[0].name) ? 1 : 0;
+          return;
+        }
+
+        if (currentClickCount === targetStep.required) {
+          currentStepIndex++;
+          currentClickCount = 0;
+
+          if (currentStepIndex === steps.length) {
+            playSuccessMelody(); 
+            setTimeout(() => {
+              document.getElementById('secretModal').style.display = 'flex';
+            }, 400);
+            currentStepIndex = 0;
+            currentClickCount = 0;
+          }
+        }
+      } else {
+        playErrorSound();
+        currentStepIndex = 0;
+        currentClickCount = 0;
+        if (direction === steps[0].name) {
+          currentClickCount = 1;
+          currentStepIndex = 0;
+        }
+      }
+    }
+
+    function closeSecret() {
+      document.getElementById('secretModal').style.display = 'none';
+      currentStepIndex = 0;
+      currentClickCount = 0;
+    }
+  </script>
+</body>
+</html>
